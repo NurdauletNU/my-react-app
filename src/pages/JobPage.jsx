@@ -1,10 +1,23 @@
-import { useParams, useLoaderData } from 'react-router-dom';
+import { useParams, useLoaderData, useNavigate } from 'react-router-dom';
 import { FaArrowLeft, FaMapMarker } from 'react-icons/fa';
 import { Link } from 'react-router-dom'
+import {toast} from 'react-toastify';
 
-const JobPage = () => {
+
+const JobPage = ({deleteJob}) => {
+    const navigate = useNavigate();
     const {id} = useParams();
     const job = useLoaderData();
+
+    const onDeleteClick = async (jobId) => {
+      const confirm = window.confirm('Are you sure you want to delete this job?');
+      if (!confirm) return;
+
+      deleteJob(jobId);
+      toast.success('Job deleted successfully');
+      navigate('/jobs');
+      
+    }
 
   return (
   <>
